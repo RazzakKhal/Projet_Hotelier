@@ -1,3 +1,38 @@
 .hauteurheader{
-    height : 10%;
+    height : 15%;
 }
+
+.hauteurfooter{
+    height : 5%;
+}
+
+.hauteurbody{
+    height : 80%;
+}
+
+#menucache{
+
+    height : 0%;
+background-color : black;
+    opacity : 0;
+    transition : 1s;
+}
+
+nav {
+    height : 100%;
+}
+
+li {
+    list-style : none;
+    font-size : 6rem;
+    text-align: center;
+    margin-top : 30px;
+}
+
+li a {
+    text-decoration : none;
+    color : white;
+}
+
+
+
