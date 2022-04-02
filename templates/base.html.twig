@@ -5,12 +5,13 @@
     <title>{% block titre %} Hotels Hypnos {% endblock %}</title>
 
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/monstyle.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/monstyle.css') }}">
+
 </head>
 
 <body class="vh-100">
-{% block header %}
-  <div class="container-fluid hauteurheader border">
+
+  <header class="container-fluid hauteurheader border">
     <div class="row h-100 align-items-center">
         <div class="col-2">
             <img src="{{ asset('images/logo.jpg') }}" class="img-fluid">
@@ -29,9 +30,8 @@ Le Groupe Hotelier
         </div>
     </div>
 
-</div>
+</header>
 
-{% endblock %}
 
     <div id="menucache">
         <nav>
@@ -62,8 +62,9 @@ blblablaldfdfsgsgttgtrghrtgttgtete
 
 
 </div>
-{% block footer %}
-    <div class="container-fluid hauteurfooter border">
+
+
+    <footer class="container-fluid hauteurfooter border fixed-bottom bg-white ">
         <div class="row">
             <div class="col-3">
                 <a href="#">mentions légales</a>
@@ -76,8 +77,8 @@ blblablaldfdfsgsgttgtrghrtgttgtete
                 © tous droits réservés
             </div>
         </div>
-    </div>
-{% endblock %}
+    </footer>
+
 <script src="{{ asset('assets/javascript/monjs.js') }}"></script>
 </body>
 

@@ -1,13 +1,19 @@
+
+
 .hauteurheader{
     height : 15%;
+    position :relative;
+
 }
 
 .hauteurfooter{
     height : 5%;
+    bottom : 0;
+
 }
 
 .hauteurbody{
-    height : 80%;
+    min-height : 100%;
 }
 
 #menucache{
@@ -34,5 +40,14 @@ li a {
     color : white;
 }
 
+div a{
+    text-decoration : none;
+    color : #565e64;
+}
+
+div a:hover{
+    text-decoration : underline;
+    color : #565e64;
+}
 
 
