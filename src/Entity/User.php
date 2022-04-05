@@ -31,6 +31,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $Firstname;
 
+    #[ORM\OneToOne(inversedBy: 'Manager', targetEntity: Etablissement::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)]
+    private $etablissement;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +125,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFirstname(string $Firstname): self
     {
         $this->Firstname = $Firstname;
+
+        return $this;
+    }
+
+    public function getEtablissement(): ?Etablissement
+    {
+        return $this->etablissement;
+    }
+
+    public function setEtablissement(Etablissement $etablissement): self
+    {
+        // set the owning side of the relation if necessary
+        if ($etablissement->getManager() !== $this) {
+            $etablissement->setManager($this);
+        }
+
+        $this->etablissement = $etablissement;
 
         return $this;
     }
