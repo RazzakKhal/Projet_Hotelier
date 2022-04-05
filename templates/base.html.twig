@@ -2,6 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset = "utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>{% block titre %} Hotels Hypnos {% endblock %}</title>
 
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
@@ -13,73 +15,93 @@
 
   <header class="container-fluid hauteurheader border">
     <div class="row h-100 align-items-center">
-        <div class="col-2">
-            <img src="{{ asset('images/logo.jpg') }}" class="img-fluid">
-        </div>
-        <div class="col-2">
+
+        <div class="col-4">
 
         </div>
-        <div class="col display-5">
-Le Groupe Hotelier
+        <div class="h5 col-3  align-items-center">
+Hypnos
         </div>
-        <div class="col-1">
+        <div class="col-3">
 
         </div>
-        <div class="col-1" id="menuburger">
+
+        <div class="col-2" id="menuburger">
             <img src="{{ asset('images/menu.svg') }}" class="img-fluid">
         </div>
     </div>
 
 </header>
 
+  <div id="menucache">
+      <nav>
+          <ul>
+              {% if app.user %}
 
-    <div id="menucache">
-        <nav>
-            <ul>
-                <li>
-                   <a class="liconnexion" href="#"> Connexion </a>
-                </li>
-                <li>
-                    <a href="#">  Accueil </a>
-                </li>
-                <li>
-                    <a href="#"> Reservation </a>
-                </li>
-                <li>
-                    <a href="#"> Contact </a>
-                </li>
-                <li>
-                    <img id="fermeturemenu" src="{{ asset('images/x.svg') }}">
-                </li>
-            </ul>
-        </nav>
-    </div>
-<div class="container-fluid hauteurbody" id="bodydy">
+              <li>
+                  <a href="{{ path('app_accueil') }}">  Accueil </a>
+              </li>
+              <li>
+                  <a href="#"> Reservation </a>
+              </li>
+              <li>
+                  <a href="#"> Contact </a>
+              </li>
+              <li>
+                  <a href="{{ path('app_logout') }}">Deconnexion</a>
+              </li>
+              <li>
+                  <img id="fermeturemenu" src="{{ asset('images/x.svg') }}">
+              </li>
+              {% else %}
+              <li>
+                  <a  href="{{ path('app_login')}}"> Connexion </a>
+              </li>
+
+              <li>
+                  <a href="{{ path('app_accueil') }}">  Accueil </a>
+              </li>
+              <li>
+                  <a href="#"> Reservation </a>
+              </li>
+              <li>
+                  <a href="#"> Contact </a>
+              </li>
+                  <li>
+                      <a  href="{{ path('app_register') }}"> Inscription </a>
+                  </li>
+              <li>
+                  <img id="fermeturemenu" src="{{ asset('images/x.svg') }}">
+              </li>
+              {% endif %}
+
+          </ul>
+      </nav>
+  </div>
+
+<div class="container-fluid  hauteurbody" id="bodydy">
 
 {% block contenu %}
 
 {% endblock %}
-
-
 </div>
 
 
+
+
     <footer class="container-fluid hauteurfooter border fixed-bottom bg-white ">
-        <div class="row">
-            <div class="col-3">
+        <div class="row justify-content-between">
+            <div class="col-6">
                 <a href="#">mentions légales</a>
             </div>
-            <div class="col">
 
-            </div>
-
-            <div class="col-3">
+            <div class="col-6">
                 © tous droits réservés
             </div>
         </div>
     </footer>
 
-<script src="{{ asset('assets/javascript/monjs.js') }}"></script>
+  <script src="{{ asset('assets/javascript/monjs.js') }}"></script>
 </body>
 
 </html>

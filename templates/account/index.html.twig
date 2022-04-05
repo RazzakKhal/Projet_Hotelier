@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+
+{% block contenu %}
+Bonjour {{ app.user.firstname }} et bienvenue sur ta page perso.
+<hr>
+   <a href="{{ path('app_modifpass') }}">-Modifier mon mot de passe</a> <br>
+    -Voir mes réservations<br>
+    -Annuler une réservation
+{% endblock %}

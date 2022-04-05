@@ -7,17 +7,28 @@ menu.addEventListener('click', apparait);
 
 function apparait(){
 
-didi.style.height = '100%';
- didi.style.opacity = '0.70';
- bodydy.style.height = '0%';
- bodydy.style.opacity = '0';
+
+
+    bodydy.style.transition = '1s';
+    bodydy.style.opacity = '0';
+    bodydy.style.display = 'none';
+
+    didi.style.opacity = '1';
+    didi.style.transition = '1s';
+    didi.style.display = 'block';
+
+
 }
 
 menucroix.addEventListener('click', disparait);
 
 function disparait(){
-    didi.style.height = '0%';
+
+    didi.style.transition = '1s';
+    didi.style.display = 'none';
     didi.style.opacity = '0';
-    bodydy.style.height = '100%';
+
+    bodydy.style.display = 'block';
     bodydy.style.opacity = '1';
+
 }

@@ -4,23 +4,25 @@
     height : 15%;
     position :relative;
 
+
 }
 
 .hauteurfooter{
-    height : 5%;
+    height : 8%;
     bottom : 0;
 
 }
 
 .hauteurbody{
     min-height : 100%;
+    transition : 1s;
 }
 
 #menucache{
 
-    height : 0%;
+    display : none;
 background-color : black;
-    opacity : 0;
+height : 100%;
     transition : 1s;
 }
 
@@ -29,8 +31,8 @@ nav {
 }
 
 li {
+    font-size : 2rem;
     list-style : none;
-    font-size : 6rem;
     text-align: center;
     margin-top : 30px;
 }
@@ -50,4 +52,7 @@ div a:hover{
     color : #565e64;
 }
 
+footer{
+    font-size : 0.8rem;
+}
 
