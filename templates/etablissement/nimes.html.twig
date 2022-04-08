@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block contenu %}
+
+    <h1 class="text-center">{{etablissement.name}} </h1> <hr>
+
+    {{ etablissement.description}} <hr>
+
+    <p class="text-decoration-underline">L'espace détente en une photo : </p>
+    <img src="{{ asset('images/salle_detente.jpg') }}" class="img-fluid">
+
+    <hr>
+
+
+
+    <p class="text-decoration-underline" > L'espace salle à manger en une photo : </p>
+    <img src="{{ asset('images/salle_manger.jpg') }}" class="img-fluid">
+
+    <hr>
+
+    suites avec titre, description, prix et bouton réserver et carousel de la galerie photo
+
+
+    <br><br><br>
+{% endblock %}

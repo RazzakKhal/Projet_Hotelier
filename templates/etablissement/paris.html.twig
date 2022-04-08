@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block contenu %}
+
+<h1 class="text-center">{{etablissement.name}} </h1> <hr>
+
+{{ etablissement.description}} <hr>
+
+   <p class="text-decoration-underline">L'espace détente en une photo : </p>
+<img src="{{ asset('images/salle_detente.jpg') }}" class="img-fluid">
+
+    <hr>
+
+
+
+   <p class="text-decoration-underline" > L'espace salle à manger en une photo : </p>
+    <img src="{{ asset('images/salle_manger.jpg') }}" class="img-fluid">
+
+    <hr>
+Les suites présentes dans notre hotel sont les suivantes : <br><br>
+
+    {% for suite in suites %}
+{{ suite.title }} <br>
+
+{{ suite.description }} <br>
+
+{{ suite.price  }} € <br>
+
+    Carousel Galerie de la suite <br>
+
+    Bouton réserver <hr>
+
+{% endfor %}
+<br><br><br>
+{% endblock %}

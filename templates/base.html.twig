@@ -47,9 +47,15 @@ Hypnos
               <li>
                   <a href="#"> Contact </a>
               </li>
+                  {% if is_granted('ROLE_ADMIN') %}
+                      <li>
+                          <a href="{{ path('admin') }}">Panel d'administration</a>
+                      </li>
+                  {% endif %}
               <li>
                   <a href="{{ path('app_logout') }}">Deconnexion</a>
               </li>
+
               <li>
                   <img id="fermeturemenu" src="{{ asset('images/x.svg') }}">
               </li>
@@ -90,12 +96,13 @@ Hypnos
 
 
     <footer class="container-fluid hauteurfooter border fixed-bottom bg-white ">
-        <div class="row justify-content-between">
-            <div class="col-6">
+        <div class="row justify-content-between w-100">
+            <div class="col-5">
                 <a href="#">mentions légales</a>
             </div>
 
-            <div class="col-6">
+
+            <div class="col text-end">
                 © tous droits réservés
             </div>
         </div>

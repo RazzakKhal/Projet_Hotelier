@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RoomRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RoomRepository::class)]
@@ -31,9 +33,14 @@ class Room
     #[ORM\Column(type: 'string', length: 255)]
     private $BookingLink;
 
-    #[ORM\ManyToOne(targetEntity: Etablissement::class, inversedBy: 'Rooms')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $etablissement;
+    #[ORM\ManyToMany(targetEntity: Etablissement::class, mappedBy: 'Room')]
+    private $etablissements;
+
+    public function __construct()
+    {
+        $this->etablissements = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -112,15 +119,31 @@ class Room
         return $this;
     }
 
-    public function getEtablissement(): ?Etablissement
+    /**
+     * @return Collection<int, Etablissement>
+     */
+    public function getEtablissements(): Collection
     {
-        return $this->etablissement;
+        return $this->etablissements;
     }
 
-    public function setEtablissement(?Etablissement $etablissement): self
+    public function addEtablissement(Etablissement $etablissement): self
     {
-        $this->etablissement = $etablissement;
+        if (!$this->etablissements->contains($etablissement)) {
+            $this->etablissements[] = $etablissement;
+            $etablissement->addRoom($this);
+        }
 
         return $this;
     }
+
+    public function removeEtablissement(Etablissement $etablissement): self
+    {
+        if ($this->etablissements->removeElement($etablissement)) {
+            $etablissement->removeRoom($this);
+        }
+
+        return $this;
+    }
+
 }

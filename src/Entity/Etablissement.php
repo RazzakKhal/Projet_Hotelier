@@ -27,16 +27,18 @@ class Etablissement
     #[ORM\Column(type: 'text')]
     private $Description;
 
-    #[ORM\OneToMany(mappedBy: 'etablissement', targetEntity: Room::class, orphanRemoval: true)]
-    private $Rooms;
 
     #[ORM\OneToOne(mappedBy: 'etablissement', targetEntity: User::class, cascade: ['persist', 'remove'])]
 
     private $Manager;
 
+    #[ORM\ManyToMany(targetEntity: Room::class, inversedBy: 'etablissements')]
+    private $Room;
+
     public function __construct()
     {
         $this->Rooms = new ArrayCollection();
+        $this->Room = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,35 +94,7 @@ class Etablissement
         return $this;
     }
 
-    /**
-     * @return Collection<int, Room>
-     */
-    public function getRooms(): Collection
-    {
-        return $this->Rooms;
-    }
 
-    public function addRoom(Room $room): self
-    {
-        if (!$this->Rooms->contains($room)) {
-            $this->Rooms[] = $room;
-            $room->setEtablissement($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRoom(Room $room): self
-    {
-        if ($this->Rooms->removeElement($room)) {
-            // set the owning side to null (unless already changed)
-            if ($room->getEtablissement() === $this) {
-                $room->setEtablissement(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getManager(): ?User
     {
@@ -130,6 +104,30 @@ class Etablissement
     public function setManager(User $Manager): self
     {
         $this->Manager = $Manager;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Room>
+     */
+    public function getRoom(): Collection
+    {
+        return $this->Room;
+    }
+
+    public function addRoom(Room $room): self
+    {
+        if (!$this->Room->contains($room)) {
+            $this->Room[] = $room;
+        }
+
+        return $this;
+    }
+
+    public function removeRoom(Room $room): self
+    {
+        $this->Room->removeElement($room);
 
         return $this;
     }
