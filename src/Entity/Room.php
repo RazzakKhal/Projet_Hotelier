@@ -36,9 +36,13 @@ class Room
     #[ORM\ManyToMany(targetEntity: Etablissement::class, mappedBy: 'Room')]
     private $etablissements;
 
+    #[ORM\OneToMany(mappedBy: 'Room', targetEntity: Reservation::class, orphanRemoval: true)]
+    private $reservations;
+
     public function __construct()
     {
         $this->etablissements = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
 
@@ -144,6 +148,40 @@ class Room
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getRoom() === $this) {
+                $reservation->setRoom(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(){
+        return $this->getTitle();
     }
 
 }
