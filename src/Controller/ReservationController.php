@@ -23,19 +23,29 @@ class ReservationController extends AbstractController
         $form->handleRequest($request);
  $client = $this->getUser();
         if($form->isSubmitted() && $form->isValid()){
+            // je vais vérifier que la date du début de séjour soit bien supérieur à ajd
+            $resa = $form->getData();
+            $datedebut = $resa->getStart()->getTimestamp();
+            $dateajd = time();
 
-          if($resa->getRoom() && $client) {
-             $resa = $form->getData();
+          if($resa->getRoom() && $client && $datedebut > $dateajd) {
+
              $resa->setClient($client);
               $entityManager->persist($resa);
               $entityManager->flush();
               echo "<alert class='alert-dark'>Réservation effectuée</alert>";
           }
-          else if($resa->getRoom()){
+          else if($resa->getRoom() && $datedebut > $dateajd){
 
               echo "<alert class='alert-dark'>Veuillez vous connecter afin de pouvoir réserver</alert>";
           }
-          else{}
+          else if($resa->getRoom()){
+              echo "<alert class='alert-dark'>Veuillez vérifier que les dates séléctionnées soient bonnes</alert>";
+          }
+          else{
+alert('la resa ne renvoi pas la chambre');
+dump($resa);
+          }
 
         }
         return $this->render('reservation/index.html.twig', [

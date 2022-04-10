@@ -14,19 +14,19 @@ class Reservation
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Etablissement::class, inversedBy: 'reservations')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $Etablissement;
 
     #[ORM\ManyToOne(targetEntity: Room::class, inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: true)]
     private $Room;
 
-    #[ORM\Column(type: 'date')]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\Column(type: 'date', nullable : true)]
+
     private $Start;
 
-    #[ORM\Column(type: 'date')]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\Column(type: 'date', nullable: true)]
+
     private $End;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'reservations')]

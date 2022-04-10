@@ -44,6 +44,7 @@ function disparait(){
 
 
 let etablissement = document.getElementById('reservation_Etablissement');
+
 let form = etablissement.closest('form');
 
 etablissement.addEventListener('change', envoi);
@@ -62,7 +63,53 @@ alert('Veuillez re-sélectionner un etablissement ou appuyer sur Envoyer pour po
 
     }
 }
-//   si la le select suite existe et que je choisi une suite je peux plus modifier l'etablissement
+
+
+// je bloque le remplissag d'etablissement tant que les dates ne sont pas selectionner pour être sur de pouvoir les récupérer sur un evenement change plus tard
+etablissement.setAttribute('disabled', 'disabled');
+//   si les champs de date de mon formulaire ne sont pas rempli alors je laisse etablissement disabled
+
+let startj = document.getElementById('reservation_Start_day');
+let startm = document.getElementById('reservation_Start_month');
+let starty = document.getElementById('reservation_Start_year');
+let endj = document.getElementById('reservation_End_day');
+let endm = document.getElementById('reservation_End_month');
+let endy = document.getElementById('reservation_End_year');
+let valeurstartm= null;
+let valeurstarty = null;
+let valeurstartj = null;
+let valeurendm = null;
+let valeurendy = null;
+let valeurendj = null;
+
+
+
+startj.addEventListener('change', deblocageetab);
+startm.addEventListener('change', deblocageetab);
+starty.addEventListener('change', deblocageetab);
+endj.addEventListener('change', deblocageetab);
+endm.addEventListener('change', deblocageetab);
+endy.addEventListener('change', deblocageetab);
+
+
+// fonction qui permet de debloquer mon champ etablissement si toutes les dates sont remplies
+function deblocageetab(){
+  //je récupère le nouveau contenu text des options selectionnées
+    valeurstartm = startm.querySelector("option:checked");
+    valeurstarty = starty.querySelector("option:checked");
+    valeurstartj = startj.querySelector("option:checked");
+    valeurendm = endm.querySelector("option:checked");
+    valeurendy = endy.querySelector("option:checked");
+    valeurendj = endj.querySelector("option:checked");
+    //
+    if(valeurstartj.innerHTML !== 'Jour' && valeurstartm.innerHTML  !== 'Mois' && valeurstarty.innerHTML  !== 'Année' && valeurendj.innerHTML  !== 'Jour' && valeurendm.innerHTML  !== 'Mois' && valeurendy.innerHTML  !== 'Année'){
+        etablissement.removeAttribute('disabled');
+    }
+    else{
+        // rien
+    }
+}
+
 
 
 
