@@ -43,8 +43,7 @@ class ReservationController extends AbstractController
               echo "<alert class='alert-dark'>Veuillez vérifier que les dates séléctionnées soient bonnes</alert>";
           }
           else{
-alert('la resa ne renvoi pas la chambre');
-dump($resa);
+
           }
 
         }

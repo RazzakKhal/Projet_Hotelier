@@ -66,7 +66,17 @@ alert('Veuillez re-sélectionner un etablissement ou appuyer sur Envoyer pour po
 
 
 // je bloque le remplissag d'etablissement tant que les dates ne sont pas selectionner pour être sur de pouvoir les récupérer sur un evenement change plus tard
+
+
 etablissement.setAttribute('disabled', 'disabled');
+
+//si mon formulaire est soumis alors je debloque le champs pour que les informations soient retransmises
+
+form.addEventListener('submit', desactivedisabledsubmit);
+function desactivedisabledsubmit(){
+    etablissement.removeAttribute('disabled');
+}
+
 //   si les champs de date de mon formulaire ne sont pas rempli alors je laisse etablissement disabled
 
 let startj = document.getElementById('reservation_Start_day');
@@ -104,6 +114,7 @@ function deblocageetab(){
     //
     if(valeurstartj.innerHTML !== 'Jour' && valeurstartm.innerHTML  !== 'Mois' && valeurstarty.innerHTML  !== 'Année' && valeurendj.innerHTML  !== 'Jour' && valeurendm.innerHTML  !== 'Mois' && valeurendy.innerHTML  !== 'Année'){
         etablissement.removeAttribute('disabled');
+
     }
     else{
         // rien
