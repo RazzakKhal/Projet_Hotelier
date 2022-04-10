@@ -12,21 +12,30 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ReservationController extends AbstractController
 {
+
     #[Route('/reservation', name: 'app_reservation')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
+
         $resa = new Reservation();
 
         $form = $this->createForm(ReservationType::class, $resa);
         $form->handleRequest($request);
-
+ $client = $this->getUser();
         if($form->isSubmitted() && $form->isValid()){
 
-          if($resa->getRoom()) {
-              $resa = $form->getData();
+          if($resa->getRoom() && $client) {
+             $resa = $form->getData();
+             $resa->setClient($client);
               $entityManager->persist($resa);
               $entityManager->flush();
+              echo "<alert class='alert-dark'>Réservation effectuée</alert>";
           }
+          else if($resa->getRoom()){
+
+              echo "<alert class='alert-dark'>Veuillez vous connecter afin de pouvoir réserver</alert>";
+          }
+          else{}
 
         }
         return $this->render('reservation/index.html.twig', [

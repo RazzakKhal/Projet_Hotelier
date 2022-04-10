@@ -26,8 +26,15 @@ $form->getParent()->add('Room', EntityType::class, [
 ]);
         };
         $builder
-            ->add('Start', DateType::class)
-            ->add('End', DateType::class)
+            ->add('Start', DateType::class, [
+
+                'label' => 'Début',
+
+            ])
+            ->add('End', DateType::class, [
+
+                'label' => 'Fin'
+            ])
             ->add('Etablissement', EntityType::class, [
                 'placeholder' => 'Choisissez votre établissement',
                 'class' => Etablissement::class,
