@@ -122,15 +122,31 @@ function deblocageetab(){
 
 
 
+
+
+
     //////////////////////////////////////////////////
 
     // Récupération des valeurs des inputs dates + etab + room, requête sur les resa existantes (si tout est selectionner verouiller les champs jusqu'au submit )
     // on recupere toutes les resa ayants cette etab et cette room
     // on recupère leur dates, si une d'elle est entre date debut et date fin du form alors ces dates ne sont pas dispo
     // dans ce cas afficher les créneaux deja pris afin d'aiguiller le client
+
+
+
 }
 
+// test récupération des données Json :
+//https://api-hypnos.herokuapp.com/api/reservations
 
+
+
+//fetch('https://api-hypnos.herokuapp.com/api/reservations/1').then(succes);
+
+fetch("https://api-hypnos.herokuapp.com/api/reservations/1")
+    .then(response => response.json())
+    .then(response => alert(JSON.stringify(response)))
+    .catch(error => alert("Erreur : " + error));
 
 
 
