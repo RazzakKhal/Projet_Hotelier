@@ -181,6 +181,7 @@ class Room
     }
 
     public function __toString(){
+
         return $this->getTitle();
     }
 

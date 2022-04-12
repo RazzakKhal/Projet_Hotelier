@@ -2,9 +2,30 @@
 
 
 {% block contenu %}
+
+{% if "ROLE_ADMIN" in user.roles %}
+
+    <a href="{{ path('admin') }}" class="btn btn-dark">Panel d'administration</a>
+
+
+
+    {% elseif "ROLE_GERANT" in user.roles %}
+Mon établissement : {{ user.Etablissement.Name }} <hr>
+        {% for suite in suites %}
+  {{ suite.Title }} <br>
+            <a href="compte/supprsuite/{{ suite.Id }}" class="btn btn-dark">Supprimer cette suite</a> <br><hr>
+
+{% endfor %}
+
+    {% else %}
+
 Bonjour {{ app.user.firstname }} et bienvenue sur ta page perso.
 <hr>
    <a href="{{ path('app_modifpass') }}">-Modifier mon mot de passe</a> <hr>
+
+
+
+    {% if reservation is defined and reservation is not null %}
     -Mes réservations :<br><br>
 
     {% for reservations in reservation  %}
@@ -17,4 +38,12 @@ Bonjour {{ app.user.firstname }} et bienvenue sur ta page perso.
 
 
     {% endfor %}
+
+    {% else %}
+        <a href="{{ path('app_reservation') }}" class="btn btn-dark">Réserver une suite</a>
+
+    {% endif %}
+
+{% endif %}
+
 {% endblock %}

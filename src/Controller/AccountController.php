@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Form\UpdatePasswordType;
 use App\Repository\ReservationRepository;
+use App\Repository\RoomRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,13 +22,26 @@ class AccountController extends AbstractController
     {
 $user = $this->getUser();
 $reservations = $user->getReservations();
-// récupération des réservations de l'utilisateur
-foreach($reservations as $reservation){
-    $resa[] = $reservation;
+$resa = null;
+$nometablissement = null;
+// récupération de l'etablissement du gérant
+if($user->getEtablissement()){
+    $etablissement = $user->getEtablissement();
+    $suites = $etablissement->getRoom();
+
 }
 
+
+// récupération des réservations de l'utilisateur si il en a
+        if($reservations){
+foreach($reservations as $reservation){
+    $resa[] = $reservation;
+}}
+
         return $this->render('account/index.html.twig', [
-            'reservation' => $resa
+            'reservation' => $resa,
+            'user' => $user,
+            'suites' => $suites
         ]);
     }
 
@@ -64,12 +78,28 @@ $user->setPassword($newpass);
     }
 
 
-    # penser à ajouter role user obligatoire
+
 
     #[Route('/compte/suppresa/{idresa}', name: 'app_suppresa')]
     public function suppResaClient(ReservationRepository $reservationRepository, $idresa){
  $reservation = $reservationRepository->find($idresa);
- $reservationRepository->remove($idresa);
+ $reservationRepository->remove($reservation);
+
         return $this->render('account/reservations.html.twig');
     }
+
+
+    // fonction qui permet à un manager de supprimer la suite de son choix de son etablissement
+    #[Route('compte/supprsuite/{idsuite}', name: 'app_supprsuite')]
+    public function suppSuiteManager($idsuite, RoomRepository $roomRepository){
+
+$suite = $roomRepository->find($idsuite);
+$roomRepository->remove($suite);
+
+        return $this->render('account/suppressionsuite.html.twig');
+    }
+
+
+
+
 }
