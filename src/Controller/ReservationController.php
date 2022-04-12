@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Reservation;
 use App\Form\ReservationType;
+use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class ReservationController extends AbstractController
 {
@@ -51,4 +54,17 @@ class ReservationController extends AbstractController
             'formulaire' => $form->createView()
         ]);
     }
+
+
+    // fonction qui me permet de recupérer mes dates lorsque je requete l'url reservation/resa
+
+    #[Route('/reservation/resa', name: 'app_resa')]
+    public function resa(EntityManagerInterface $entityManager, ReservationRepository $reservationRepository, NormalizerInterface $normalizer ){
+$reservations = $reservationRepository->findAll();
+$dates = $normalizer->normalize($reservations, null, ['groups' => 'post:read']);
+
+
+
+        return $this->json($dates, 200);
+}
 }

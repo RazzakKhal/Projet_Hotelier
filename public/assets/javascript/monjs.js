@@ -113,6 +113,48 @@ function deblocageetab(){
     valeurendj = endj.querySelector("option:checked");
     //
     if(valeurstartj.innerHTML !== 'Jour' && valeurstartm.innerHTML  !== 'Mois' && valeurstarty.innerHTML  !== 'Année' && valeurendj.innerHTML  !== 'Jour' && valeurendm.innerHTML  !== 'Mois' && valeurendy.innerHTML  !== 'Année'){
+        // requetes mes dates en ajax
+        let url = '/reservation/resa';
+       let dates;
+        axios.get(url).then(function (response) {
+           dates = response.data;
+            // je récupère ma valeur date début et date fin entré ( parse les met en timestamp milliseconde et je les converti en seconde pour comparer par la suite)
+            let datedebutmili = Date.parse(valeurstartm.innerHTML + ' '+ valeurstartj.innerHTML + ','+ valeurstarty.innerHTML);
+            let datedebut = datedebutmili / 1000;
+            let datefinmili = Date.parse(valeurendm.innerHTML + ' '+ valeurendj.innerHTML + ','+ valeurendy.innerHTML);
+            let datefin = datefinmili / 1000;
+
+            // Pour chaque valeur dans dates si elles sont comprise entre datedebut et datefin alors alert
+
+            dates.forEach(function(date){
+                // je récupère toutes les dates de mon fichier json, je les converti en timestamp, et compare avec les dates du client
+                let dateentremili = Date.parse(date.Start);
+                let datesortiemili = Date.parse(date.End);
+                let dateentre = dateentremili / 1000;
+                let datesortie = datesortiemili / 1000;
+
+                if(dateentre > datesortie){
+                    alert("les dates d'entrée et de sorties ne sont pas cohérentes");
+                }else if((dateentre <= datedebut && datefin <= datesortie) || (dateentre <= datedebut && datesortie <= datefin) || (dateentre <= datedebut && datefin <= datesortie) || (dateentre >= datedebut && datefin >= dateentre)){
+//
+                    etablissement.setAttribute('disabled', 'disabled');
+                    dates.forEach(function(date){
+                        alert(" \n Période réservée : \n Entrée : " + date.Start + " \n Sortie : " + date.End);
+                    })
+                    ;
+
+                }else{
+
+                }
+
+            });
+
+
+        })
+
+
+
+
         etablissement.removeAttribute('disabled');
 
     }
@@ -126,6 +168,8 @@ function deblocageetab(){
 
 
     //////////////////////////////////////////////////
+
+// la route requetée sera /reservation/resa
 
     // Récupération des valeurs des inputs dates + etab + room, requête sur les resa existantes (si tout est selectionner verouiller les champs jusqu'au submit )
     // on recupere toutes les resa ayants cette etab et cette room
