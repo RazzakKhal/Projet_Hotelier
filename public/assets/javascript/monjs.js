@@ -123,34 +123,41 @@ function deblocageetab(){
             let datedebut = datedebutmili / 1000;
             let datefinmili = Date.parse(valeurendm.innerHTML + ' '+ valeurendj.innerHTML + ','+ valeurendy.innerHTML);
             let datefin = datefinmili / 1000;
-
+            let aujourdhui = new Date();
+            let maintenant = aujourdhui.getTime();
+            let maintenants = maintenant / 1000;
             // Pour chaque valeur dans dates si elles sont comprise entre datedebut et datefin alors alert
+       if((datedebut < maintenants) || (datefin < datedebut)){
+                alert("Les dates selectionnées ne doivent pas être antérieur à aujourd'hui ou/et la date de sortie ne peut-être apres celle d'entrée");
+                etablissement.setAttribute('disabled', 'disabled');
+            }else {
+           dates.forEach(function (date) {
+               // je récupère toutes les dates de mon fichier json, je les converti en timestamp, et compare avec les dates du client
+               let dateentremili = Date.parse(date.Start);
+               let datesortiemili = Date.parse(date.End);
+               let dateentre = dateentremili / 1000;
+               let datesortie = datesortiemili / 1000;
 
-            dates.forEach(function(date){
-                // je récupère toutes les dates de mon fichier json, je les converti en timestamp, et compare avec les dates du client
-                let dateentremili = Date.parse(date.Start);
-                let datesortiemili = Date.parse(date.End);
-                let dateentre = dateentremili / 1000;
-                let datesortie = datesortiemili / 1000;
-
-                if(dateentre > datesortie){
-                    alert("les dates d'entrée et de sorties ne sont pas cohérentes");
-                }else if((dateentre <= datedebut && datefin <= datesortie) || (dateentre <= datedebut && datesortie <= datefin) || (dateentre <= datedebut && datefin <= datesortie) || (dateentre >= datedebut && datefin >= dateentre)){
+               if (dateentre > datesortie) {
+                   alert("les dates d'entrée et de sorties ne sont pas cohérentes");
+                   etablissement.setAttribute('disabled', 'disabled');
+               } else if ((dateentre <= datedebut && datefin <= datesortie) || (dateentre <= datedebut && datesortie <= datefin) || (dateentre <= datedebut && datefin <= datesortie) || (dateentre >= datedebut && datefin >= dateentre)) {
 //
-                    etablissement.setAttribute('disabled', 'disabled');
-                    dates.forEach(function(date){
-                        alert(" \n Période réservée : \n Entrée : " + date.Start + " \n Sortie : " + date.End);
-                    })
-                    ;
+                   etablissement.setAttribute('disabled', 'disabled');
 
-                }else{
-
-                }
-
-            });
+                   alert(" \n Période réservée : \n Entrée : " + date.Start + " \n Sortie : " + date.End);
+                   console.log(maintenants);
 
 
-        })
+               } else {
+
+               }
+
+           });
+       }
+
+
+        });
 
 
 
