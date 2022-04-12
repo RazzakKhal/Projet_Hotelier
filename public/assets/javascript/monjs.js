@@ -136,17 +136,9 @@ function deblocageetab(){
 
 }
 
-// test récupération des données Json :
-//https://api-hypnos.herokuapp.com/api/reservations
 
 
 
-//fetch('https://api-hypnos.herokuapp.com/api/reservations/1').then(succes);
-
-fetch("https://api-hypnos.herokuapp.com/api/reservations/1")
-    .then(response => response.json())
-    .then(response => alert(JSON.stringify(response)))
-    .catch(error => alert("Erreur : " + error));
 
 
 
