@@ -141,7 +141,7 @@ function deblocageetab(){
                if (dateentre > datesortie) {
                    alert("les dates d'entrée et de sorties ne sont pas cohérentes");
                    etablissement.setAttribute('disabled', 'disabled');
-               } else if ((dateentre <= datedebut && datefin <= datesortie) || (dateentre <= datedebut && datesortie <= datefin) || (dateentre <= datedebut && datefin <= datesortie) || (dateentre >= datedebut && datefin >= dateentre)) {
+               } else if ((dateentre <= datedebut && datefin <= datesortie) || (dateentre <= datedebut && datedebut <= datesortie) || (dateentre <= datedebut && datefin <= datesortie) || (dateentre >= datedebut && datefin >= dateentre)) {
 //
                    etablissement.setAttribute('disabled', 'disabled');
 

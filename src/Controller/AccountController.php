@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+
 use App\Form\UpdatePasswordType;
+use App\Repository\ReservationRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,16 +12,23 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+
 
 class AccountController extends AbstractController
 {
     #[Route('/compte', name: 'app_account')]
     public function index(): Response
     {
+$user = $this->getUser();
+$reservations = $user->getReservations();
+// récupération des réservations de l'utilisateur
+foreach($reservations as $reservation){
+    $resa[] = $reservation;
+}
 
-
-        return $this->render('account/index.html.twig');
+        return $this->render('account/index.html.twig', [
+            'reservation' => $resa
+        ]);
     }
 
     #[Route('/compte/modification-mot-de-passe', name : 'app_modifpass')]
@@ -53,5 +61,15 @@ $user->setPassword($newpass);
             'notification' => $notification
         ]);
 
+    }
+
+
+    # penser à ajouter role user obligatoire
+
+    #[Route('/compte/suppresa/{idresa}', name: 'app_suppresa')]
+    public function suppResaClient(ReservationRepository $reservationRepository, $idresa){
+ $reservation = $reservationRepository->find($idresa);
+ $reservationRepository->remove($idresa);
+        return $this->render('account/reservations.html.twig');
     }
 }

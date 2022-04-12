@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
@@ -10,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class ReservationController extends AbstractController
@@ -34,6 +34,7 @@ class ReservationController extends AbstractController
           if($resa->getRoom() && $client && $datedebut > $dateajd) {
 
              $resa->setClient($client);
+             $client->addReservation($resa);
               $entityManager->persist($resa);
               $entityManager->flush();
               echo "<alert class='alert-dark'>Réservation effectuée</alert>";

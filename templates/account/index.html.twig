@@ -4,7 +4,17 @@
 {% block contenu %}
 Bonjour {{ app.user.firstname }} et bienvenue sur ta page perso.
 <hr>
-   <a href="{{ path('app_modifpass') }}">-Modifier mon mot de passe</a> <br>
-    -Voir mes réservations<br>
-    -Annuler une réservation
+   <a href="{{ path('app_modifpass') }}">-Modifier mon mot de passe</a> <hr>
+    -Mes réservations :<br><br>
+
+    {% for reservations in reservation  %}
+
+        Etablissement : {{ reservations.Etablissement.Name }} <br>
+        Suite : {{ reservations.Room.Title }} <br>
+        Date d'entrée : {{ reservations.Start | format_datetime() }} <br>
+        Date de sortie : {{ reservations.End | format_datetime() }} <br><br>
+        <a href="/compte/suppresa/{{  reservations.id }}" class="btn btn-dark">Annuler ma réservation</a><hr>
+
+
+    {% endfor %}
 {% endblock %}
