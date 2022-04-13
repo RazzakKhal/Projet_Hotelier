@@ -18,9 +18,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class AccountController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
+
     public function __construct($entityManager)
     {
-        $this->entityManager = $entityManager;
+        return $this->entityManager = $entityManager;
     }
 
     #[Route('/compte', name: 'app_account')]
@@ -100,7 +101,9 @@ if($hasher->isPasswordValid($user, $oldpass)){
     public function suppSuiteManager($idsuite, RoomRepository $roomRepository){
 
         $suite = $roomRepository->find($idsuite);
-        $this->entityManager->remove($suite);
+
+            $this->entityManager->remove($suite);
+
         $this->entityManager->flush();
         return $this->render('account/suppressionsuite.html.twig');
     }
