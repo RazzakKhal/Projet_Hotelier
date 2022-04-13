@@ -6,7 +6,6 @@ namespace App\Controller;
 use App\Form\UpdatePasswordType;
 use App\Repository\ReservationRepository;
 use App\Repository\RoomRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,12 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AccountController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
 
-    public function __construct($entityManager)
-    {
-        return $this->entityManager = $entityManager;
-    }
 
     #[Route('/compte', name: 'app_account')]
     public function index(): Response
@@ -88,23 +82,23 @@ if($hasher->isPasswordValid($user, $oldpass)){
 
 
     #[Route('/compte/suppresa/{idresa}', name: 'app_suppresa')]
-    public function suppResaClient(ReservationRepository $reservationRepository, $idresa){
+    public function suppResaClient(EntityManagerInterface $entityManager ,ReservationRepository $reservationRepository, $idresa){
  $reservation = $reservationRepository->find($idresa);
- $this->entityManager->remove($reservation);
- $this->entityManager->flush();
+ $entityManager->remove($reservation);
+ $entityManager->flush();
         return $this->render('account/reservations.html.twig');
     }
 
 
     // fonction qui permet à un manager de supprimer la suite de son choix de son etablissement
     #[Route('compte/supprsuite/{idsuite}', name: 'app_supprsuite')]
-    public function suppSuiteManager($idsuite, RoomRepository $roomRepository){
+    public function suppSuiteManager($idsuite, RoomRepository $roomRepository, EntityManagerInterface $entityManager){
 
         $suite = $roomRepository->find($idsuite);
 
-            $this->entityManager->remove($suite);
+            $entityManager->remove($suite);
 
-        $this->entityManager->flush();
+        $entityManager->flush();
         return $this->render('account/suppressionsuite.html.twig');
     }
 
