@@ -27,6 +27,8 @@ $user = $this->getUser();
 $reservations = $user->getReservations();
 $resa = null;
 $nometablissement = null;
+$suites = null;
+
 // récupération de l'etablissement du gérant
 if($user->getEtablissement()){
     $etablissement = $user->getEtablissement();
@@ -86,9 +88,21 @@ if($hasher->isPasswordValid($user, $oldpass)){
     #[Route('/compte/suppresa/{idresa}', name: 'app_suppresa')]
     public function suppResaClient(EntityManagerInterface $entityManager ,ReservationRepository $reservationRepository, $idresa){
  $reservation = $reservationRepository->find($idresa);
- $entityManager->remove($reservation);
- $entityManager->flush();
-        return $this->render('account/reservations.html.twig');
+ // si date debut à une différence de 3 jours avec celle d'aujourd'hui alors je bloque l'annulation
+        $aujourdhui = time();   // ajd en timestamp unix
+        $datedebut = $reservation->getStart()->getTimestamp();
+        $jours3 = 259200;
+        $verification = null;
+
+if(($datedebut - $aujourdhui) < $jours3){
+    $verification = 'La réservation ne peut-être annulé lorsque elle commence dans moins de 3 jours';
+}else {
+    $this->getUser()->removeReservation($reservation);
+    $entityManager->flush();
+    $verification = 'La reservation à bien été annulée';
+}
+        return $this->render('account/reservations.html.twig',
+        ['verification' => $verification]);
     }
 
 

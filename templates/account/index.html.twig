@@ -12,7 +12,7 @@
     {% elseif "ROLE_GERANT" in user.roles %}
 <p class="display-4 text-center">{{ user.Etablissement.Name }} </p><hr>
         {% for suite in suites %}
-  {{ suite.Title }} <br>
+<p class="display-6"> {{ suite.Title }} </p><br>
             <a href="compte/supprsuite/{{ suite.Id }}" class="btn btn-dark">Supprimer cette suite</a> <br><hr>
 
 {% endfor %}
