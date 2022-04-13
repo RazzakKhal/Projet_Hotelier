@@ -17,6 +17,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AccountController extends AbstractController
 {
+    private EntityManagerInterface $entityManager;
+    public function __construct($entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     #[Route('/compte', name: 'app_account')]
     public function index(): Response
     {
@@ -60,7 +66,7 @@ foreach($reservations as $reservation){
             $oldpass = $form->get('old_password')->getData();
 if($hasher->isPasswordValid($user, $oldpass)){
     $newpass = $hasher->hashPassword($user, $form->get('new_password')->getData());
-$user->setPassword($newpass);
+    $user->setPassword($newpass);
     $entityManager->flush();
     $notification = 'Modification du mot de passe réussie';
 }else{
@@ -83,8 +89,8 @@ $user->setPassword($newpass);
     #[Route('/compte/suppresa/{idresa}', name: 'app_suppresa')]
     public function suppResaClient(ReservationRepository $reservationRepository, $idresa){
  $reservation = $reservationRepository->find($idresa);
- $reservationRepository->remove($reservation);
-
+ $this->entityManager->remove($reservation);
+ $this->entityManager->flush();
         return $this->render('account/reservations.html.twig');
     }
 
@@ -93,9 +99,9 @@ $user->setPassword($newpass);
     #[Route('compte/supprsuite/{idsuite}', name: 'app_supprsuite')]
     public function suppSuiteManager($idsuite, RoomRepository $roomRepository){
 
-$suite = $roomRepository->find($idsuite);
-$roomRepository->remove($suite);
-
+        $suite = $roomRepository->find($idsuite);
+        $this->entityManager->remove($suite);
+        $this->entityManager->flush();
         return $this->render('account/suppressionsuite.html.twig');
     }
 
