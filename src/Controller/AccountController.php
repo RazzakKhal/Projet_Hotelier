@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 
+use App\Form\ManagerEtablissementType;
 use App\Form\UpdatePasswordType;
+use App\Repository\EtablissementRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -91,18 +93,26 @@ if($hasher->isPasswordValid($user, $oldpass)){
 
 
     // fonction qui permet à un manager de supprimer la suite de son choix de son etablissement
-    #[Route('compte/supprsuite/{idsuite}', name: 'app_supprsuite')]
+    #[Route('/compte/supprsuite/{idsuite}', name: 'app_supprsuite')]
     public function suppSuiteManager($idsuite, RoomRepository $roomRepository, EntityManagerInterface $entityManager){
-
+//recuperer la suite de l'etablissement
         $suite = $roomRepository->find($idsuite);
-
-            $entityManager->remove($suite);
+        $etablissement = $this->getUser()->getEtablissement();
+        $etablissement->removeRoom($suite);
 
         $entityManager->flush();
         return $this->render('account/suppressionsuite.html.twig');
     }
 
+#[Route('/compte/ajoutsuite', name: 'app_ajoutsuite')]
+public function ajoutSuiteManager(){
 
+        $etablissement = $this->getUser()->getEtablissement();
+$form = $this->createForm(ManagerEtablissementType::class, $etablissement);
 
+        return $this->render('account/ajoutsuite.html.twig', [
+            'formulaire' => $form->createView()
+        ]);
+}
 
 }

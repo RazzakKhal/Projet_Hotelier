@@ -145,7 +145,7 @@ function deblocageetab(){
 //
                    etablissement.setAttribute('disabled', 'disabled');
 
-                   alert(" \n Période réservée : \n Entrée : " + date.Start + " \n Sortie : " + date.End);
+                   alert(" \n Période non disponible car réservée de : \n Entrée : " + date.Start + " \n Sortie : " + date.End);
                    console.log(maintenants);
 
 
