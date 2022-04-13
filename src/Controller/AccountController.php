@@ -104,12 +104,34 @@ if($hasher->isPasswordValid($user, $oldpass)){
         return $this->render('account/suppressionsuite.html.twig');
     }
 
+    // fonction qui permet à un manager d'ajouter une suite
+
 #[Route('/compte/ajoutsuite', name: 'app_ajoutsuite')]
-public function ajoutSuiteManager(){
+public function ajoutSuiteManager(Request $request, EntityManagerInterface $entityManager){
 
         $etablissement = $this->getUser()->getEtablissement();
 $form = $this->createForm(ManagerEtablissementType::class, $etablissement);
+$form->handleRequest($request);
 
+if($form->isSubmitted() && $form->isValid()){
+   $suite =  $form->get('Room')->getData();
+   $suitetitre = $suite->getTitle();
+   $tableautitre = null;
+    $suitesetab = $etablissement->getRoom();
+   foreach($suitesetab as $titre){
+       $tableautitre[] = $titre;
+   }
+    // ajouter une condition si l'etablissement ne possède pas deja cette room
+
+    if(in_array($suitetitre, $tableautitre)){
+        echo "<alert class='alert-danger'>Cette suite est déjà présente dans votre établissement</alert>";
+    }else {
+
+        $etablissement->addRoom($suite);
+        $entityManager->flush();
+        echo "<alert class='alert-info'>La suite a bien été ajouté à votre éstablissement</alert>";
+    }
+}
         return $this->render('account/ajoutsuite.html.twig', [
             'formulaire' => $form->createView()
         ]);

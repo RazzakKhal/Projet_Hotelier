@@ -10,13 +10,15 @@
 
 
     {% elseif "ROLE_GERANT" in user.roles %}
-Mon établissement : {{ user.Etablissement.Name }} <hr>
+<p class="display-4 text-center">{{ user.Etablissement.Name }} </p><hr>
         {% for suite in suites %}
   {{ suite.Title }} <br>
             <a href="compte/supprsuite/{{ suite.Id }}" class="btn btn-dark">Supprimer cette suite</a> <br><hr>
 
 {% endfor %}
+<a href="{{ path('app_ajoutsuite') }}" class="btn btn-info">Ajouter une suite </a>
 
+        <hr>
     {% else %}
 
 Bonjour {{ app.user.firstname }} et bienvenue sur ta page perso.
