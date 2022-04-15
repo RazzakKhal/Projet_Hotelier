@@ -2,9 +2,13 @@
 
 {% block contenu %}
 
-    {{ form_start(formulaire) }}
+    {{ form_start(formulaire, {'attr': {'id': 'form_perso1'}}) }}
     {{ form_widget(formulaire) }}
-    <input type="submit" class="btn btn-dark">
+    {% if app.user %}
+        <input type="submit" class="btn btn-dark" >
+    {% else %}
+        <alert class="alert-info">Vous devez être connecté pour pouvoir réserver</alert>
+    {% endif %}
     {{ form_end(formulaire) }}
 
 
@@ -12,4 +16,8 @@
     <br>
     <br>
 
+{% endblock %}
+{% block addjavascripts %}
+
+    <script src="{{ asset('assets/javascript/maresagenerale.js') }}"></script>
 {% endblock %}

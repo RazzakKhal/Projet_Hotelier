@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Reservation;
+use App\Form\EtabRoomResaType;
 use App\Form\ReservationType;
+use App\Repository\EtablissementRepository;
 use App\Repository\ReservationRepository;
+use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +37,7 @@ class ReservationController extends AbstractController
           if($resa->getRoom() && $client && $datedebut > $dateajd) {
 
              $resa->setClient($client);
-             $client->addReservation($resa);
+           //inutile  $client->addReservation($resa);
               $entityManager->persist($resa);
               $entityManager->flush();
               echo "<alert class='alert-dark'>Réservation effectuée</alert>";
@@ -68,4 +71,36 @@ $dates = $normalizer->normalize($reservations, null, ['groups' => 'post:read']);
 
         return $this->json($dates, 200);
 }
+
+
+// fonction qui permet d'avoir un formulaire pré-rempli lors du clique sur la page de l'etablissement pour réserver une suite
+
+#[Route('/reservation/{etab}/{room}', name: 'app_resapersonnalise')]
+public function resaPerso($etab, $room, Request $request, EtablissementRepository $etablissementRepository, RoomRepository $roomRepository, EntityManagerInterface $entityManager){
+        $resa = new Reservation();
+        $etablissement = $etablissementRepository->find($etab);
+        $suite = $roomRepository->find($room);
+        $resa->setEtablissement($etablissement);
+        $resa->setRoom($suite);
+
+    $form = $this->createForm(EtabRoomResaType::class, $resa);
+    $form->handleRequest($request);
+
+    if($form->isSubmitted() && $form->isValid()){
+         $client = $this->getUser();
+        $resa = $form->getData();
+        $resa->setEtablissement($etablissement); // je remet etab et room car champs disabled
+        $resa->setRoom($suite);
+        $resa->setClient($client);
+        $entityManager->persist($resa);
+        $entityManager->flush();
+
+    }
+
+
+        return $this->render('reservation/resaperso.html.twig', [
+            'formulaire' => $form->createView()
+        ]);
+}
+
 }
