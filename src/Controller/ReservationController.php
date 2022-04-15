@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+
 use App\Entity\Reservation;
 use App\Form\EtabRoomResaType;
 use App\Form\ReservationType;
@@ -77,6 +77,8 @@ $dates = $normalizer->normalize($reservations, null, ['groups' => 'post:read']);
 
 #[Route('/reservation/{etab}/{room}', name: 'app_resapersonnalise')]
 public function resaPerso($etab, $room, Request $request, EtablissementRepository $etablissementRepository, RoomRepository $roomRepository, EntityManagerInterface $entityManager){
+
+
         $resa = new Reservation();
         $etablissement = $etablissementRepository->find($etab);
         $suite = $roomRepository->find($room);
@@ -87,13 +89,24 @@ public function resaPerso($etab, $room, Request $request, EtablissementRepositor
     $form->handleRequest($request);
 
     if($form->isSubmitted() && $form->isValid()){
-         $client = $this->getUser();
+        $client = $this->getUser();
         $resa = $form->getData();
-        $resa->setEtablissement($etablissement); // je remet etab et room car champs disabled
-        $resa->setRoom($suite);
-        $resa->setClient($client);
-        $entityManager->persist($resa);
-        $entityManager->flush();
+        $datedebut = $resa->getStart()->getTimestamp();
+        $dateajd = time();
+
+        if($datedebut > $dateajd) {
+            $resa->setEtablissement($etablissement); // je remet etab et room car champs disabled
+            $resa->setRoom($suite);
+            $resa->setClient($client);
+            $entityManager->persist($resa);
+            $entityManager->flush();
+            echo "<alert class='alert-dark'>Réservation effectuée</alert>";
+        }
+        else {
+
+            echo "<alert class='alert-dark'>Les dates indiquées ne semblent pas corrects</alert>";
+        }
+
 
     }
 

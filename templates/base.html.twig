@@ -48,7 +48,7 @@ Hypnos
                   <a href="{{ path('app_reservation')}}"> Reservation </a>
               </li>
               <li>
-                  <a href="#"> Contact </a>
+                  <a href="{{ path('app_contact')}}"> Contact </a>
               </li>
                   {% if is_granted('ROLE_ADMIN') %}
                       <li>
@@ -74,7 +74,7 @@ Hypnos
                   <a href="{{ path('app_reservation')}}"> Reservation </a>
               </li>
               <li>
-                  <a href="#"> Contact </a>
+                  <a href="{{ path('app_contact')}}"> Contact </a>
               </li>
                   <li>
                       <a  href="{{ path('app_register') }}"> Inscription </a>
