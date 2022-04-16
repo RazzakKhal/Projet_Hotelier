@@ -2,62 +2,64 @@
 
 {% block contenu %}
 
-<h1 class="text-center">{{etablissement.name}} </h1> <hr>
+    <h1 class="text-center">{{etablissement.name}} </h1> <hr>
 
-{{ etablissement.description}} <hr>
+    <p class="lead"> {{ etablissement.description}} </p>  <hr>
 
-   <p class="text-decoration-underline">L'espace détente en une photo : </p>
-<img src="{{ asset('images/salle_detente.jpg') }}" class="img-fluid">
+    <p class="text-decoration-underline lead">L'espace détente en une photo </p>
+    <img src="{{ asset('images/salle_detente.jpg') }}" class="img-fluid">
 
     <hr>
 
 
 
-   <p class="text-decoration-underline" > L'espace salle à manger en une photo : </p>
+    <p class="text-decoration-underline lead" > L'espace salle à manger en une photo</p>
     <img src="{{ asset('images/salle_manger.jpg') }}" class="img-fluid">
 
     <hr><br><br>
-Les suites présentes dans notre hotel sont les suivantes : <br><br><br><br><hr>
+    <p class="lead">Les suites présentes dans notre hotel sont les suivantes :</p> <br><br><br>
 
     {% for suite in suites %}
 
-<h3 class="display-6 text-center text-decoration-underline">{{ suite.title }} </h3><br><br>
+        <h3 class="display-6 text-center">{{ suite.title }} </h3><br><br>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <p class="text-center lead">{{ suite.description }} </p><br><br>
 
-<p class="text-center">{{ suite.description }} </p><br><br>
+                <p class="display-3">{{ suite.price  }} € </p><br>
 
-        <p class="display-3">{{ suite.price  }} € </p><br>
+            </div>
 
+            <div class="col-12 col-md-6">
+                <div class="taillecarrousel">
 
+                    <div id="carouselExampleControls{{ loop.index }}" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{{ asset('images/'~suite.library[0]~'') }}" class="d-block w-100 img-fluid" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ asset('images/'~suite.library[1]~'') }}" class="d-block w-100 img-fluid" alt="...">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{ loop.index }}" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{ loop.index }}" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
 
-
-<div class="taillecarrousel">
-
-        <div id="carouselExampleControls{{ loop.index }}" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="{{ asset('images/'~suite.library[0]~'') }}" class="d-block w-100 img-fluid" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('images/'~suite.library[1]~'') }}" class="d-block w-100 img-fluid" alt="...">
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{ loop.index }}" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
         </div>
 
-</div>
-
-
         <br>
-<div class="row justify-content-center">
-        <a href="/reservation/{{ etablissement.id }}/{{ suite.id }}" class="col-6 btn btn-dark"> Réserver </a>
-</div><br><hr>
-{% endfor %}
-<br><br><br>
+        <div class="row justify-content-center">
+            <a href="/reservation/{{ etablissement.id }}/{{ suite.id }}" class="col-6 col-md-3 btn btn-dark"> Réserver </a>
+        </div><br><hr>
+    {% endfor %}
+    <br><br><br>
 {% endblock %}

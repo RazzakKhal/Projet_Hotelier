@@ -1,42 +1,39 @@
 //Apparition et disparition du menu en fonction du clique
 
-let menu = document.getElementById('menuburger');
-let didi = document.getElementById('menucache');
+let iconemenu = document.getElementById('menuburger');
+let menucache = document.getElementById('menucache');
+let navcache = document.getElementById('navcache');
 let bodydy = document.getElementById('bodydy');
-let menucroix = document.getElementById('fermeturemenu');
+let iconecroix = document.getElementById('fermeturemenu');
 
 
 
 
 
-menu.addEventListener('click', apparait);
+iconemenu.addEventListener('click', apparait);
 
 function apparait(){
 
 
 
-    bodydy.style.transition = '1s';
-    bodydy.style.opacity = '0';
-    bodydy.style.display = 'none';
 
-    didi.style.opacity = '1';
-    didi.style.transition = '1s';
-    didi.style.display = 'block';
+   menucache.style.opacity = '0.75';
+    menucache.style.right ='0px';
+
+  //  menucache.style.zIndex = '2';
 
 
 }
 
-menucroix.addEventListener('click', disparait);
+iconecroix.addEventListener('click', disparait);
 
 function disparait(){
 
-    didi.style.transition = '1s';
-    didi.style.display = 'none';
-    didi.style.opacity = '0';
 
-    bodydy.style.display = 'block';
-    bodydy.style.opacity = '1';
+  menucache.style.opacity = '0';
 
+
+    menucache.style.right ='1000px';
 }
 
 

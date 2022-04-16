@@ -38,11 +38,13 @@ Hypnos
           <div class="container-fluid">
               {% if app.user %}
               <a class="nav-item" href="{{ path('app_accueil') }}">Accueil</a>
-              <a class="nav-item" href="{{ path('app_account') }}">Espace Membre</a>
+
               <a class="nav-item" href="{{ path('app_reservation')}}">Reservation</a>
               <a class="nav-item" href="{{ path('app_contact')}}">Contact</a>
               {% if is_granted('ROLE_ADMIN') %}
                   <a class="nav-item"  href="{{ path('admin') }}">Panel d'administration</a>
+                  {% else %}
+                      <a class="nav-item" href="{{ path('app_account') }}">Espace Membre</a>
               {% endif %}
                   <a class="nav-item"  href="{{ path('app_logout') }}">Deconnexion</a>
               {% else %}
@@ -58,7 +60,7 @@ Hypnos
 </header>
 
   <div id="menucache">
-      <nav>
+      <nav id="navcache">
           <ul>
               {% if app.user %}
 

@@ -15,24 +15,33 @@
 
 }
 
-.hauteurbody{
+#bodydy{
+    position : absolute;
+    z-index:1;
     min-height : 100%;
-    transition : 1s;
+    background-color : white;
 }
 
 #menucache{
 
-    display : none;
-background-color : black;
-height : 100%;
+    position : absolute;
+    right : 1300px;
+    z-index:2;
+    background-color : black;
+    height : 100%;
+    width : 100%;
+    opacity : 0;
     transition : 1s;
+    box-shadow: 0px 10px 15px black;
 }
 
 nav {
-    height : 100%;
+
+    max-height : 100%;
 }
 
 li {
+
     font-size : 1.8rem;
     list-style : none;
     text-align: center;
@@ -40,6 +49,7 @@ li {
 }
 
 li a {
+
     text-decoration : none;
     color : white;
 }
