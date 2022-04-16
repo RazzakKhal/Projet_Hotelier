@@ -17,6 +17,7 @@ class ContactController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     public function index(Request $request, MailerInterface $mailer): Response
     {
+        $notif = null;
         $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
@@ -42,11 +43,14 @@ class ContactController extends AbstractController
                 ;
 
             $mailer->send($email);
+
+            $notif = "votre message à bien été envoyé";
         }
 
 
         return $this->render('contact/index.html.twig', [
-            'formulaire' => $form->createView()
+            'formulaire' => $form->createView(),
+            'notif' => $notif
         ]);
     }
 }
