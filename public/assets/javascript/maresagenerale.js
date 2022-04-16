@@ -89,7 +89,7 @@ function deblocageetab(){
     //
     if(valeurstartj.innerHTML !== 'Jour' && valeurstartm.innerHTML  !== 'Mois' && valeurstarty.innerHTML  !== 'Année' && valeurendj.innerHTML  !== 'Jour' && valeurendm.innerHTML  !== 'Mois' && valeurendy.innerHTML  !== 'Année'){
         // requetes mes dates en ajax
-        let url = '/reservation/resa';
+        let url = '/reserv/resa/';
         let dates;
         axios.get(url).then(function (response) {
             dates = response.data;

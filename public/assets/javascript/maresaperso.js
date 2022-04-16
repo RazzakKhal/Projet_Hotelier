@@ -16,12 +16,16 @@ let starty = document.getElementById('etab_room_resa_Start_year');
 let endj = document.getElementById('etab_room_resa_End_day');
 let endm = document.getElementById('etab_room_resa_End_month');
 let endy = document.getElementById('etab_room_resa_End_year');
+let etab = document.getElementById('etab_room_resa_Etablissement');
+let roomm = document.getElementById('etab_room_resa_Room');
 let valeurstartm= null;
 let valeurstarty = null;
 let valeurstartj = null;
 let valeurendm = null;
 let valeurendy = null;
 let valeurendj = null;
+let valeuretab = null;
+let valeurroom = null;
 
 
 
@@ -45,10 +49,13 @@ function deblocageetab(){
     valeurendm = endm.querySelector("option:checked");
     valeurendy = endy.querySelector("option:checked");
     valeurendj = endj.querySelector("option:checked");
+    valeuretab = etab.querySelector("option:checked").innerHTML;
+    valeurroom = roomm.querySelector("option:checked").innerHTML;
+
     //
     if(valeurstartj.innerHTML !== 'Jour' && valeurstartm.innerHTML  !== 'Mois' && valeurstarty.innerHTML  !== 'Année' && valeurendj.innerHTML  !== 'Jour' && valeurendm.innerHTML  !== 'Mois' && valeurendy.innerHTML  !== 'Année'){
         // requetes mes dates en ajax
-        let url = '/reservation/resa';
+        let url = '/reserv/resa' + '/' + valeuretab + '/' + valeurroom;
         let dates;
         axios.get(url).then(function (response) {
             dates = response.data;

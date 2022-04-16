@@ -62,10 +62,16 @@ class ReservationController extends AbstractController
 
     // fonction qui me permet de recupérer mes dates lorsque je requete l'url reservation/resa
 
-    #[Route('/reservation/resa', name: 'app_resa')]
-    public function resa(EntityManagerInterface $entityManager, ReservationRepository $reservationRepository, NormalizerInterface $normalizer ){
-$reservations = $reservationRepository->findAll();
-$dates = $normalizer->normalize($reservations, null, ['groups' => 'post:read']);
+    #[Route('/reserv/resa/{etab}/{room}', name: 'app_resa')]
+    public function resa($etab, $room, ReservationRepository $reservationRepository, NormalizerInterface $normalizer, EtablissementRepository $etablissementRepository, RoomRepository $roomRepository ){
+$etablissement = $etablissementRepository->findOneBy([
+    'Name' => $etab
+]);
+$suite = $roomRepository->findOneBy([
+    'Title' => $room
+]);
+        $reservations = $reservationRepository->findAll();
+       $dates = $normalizer->normalize($reservations, null, ['groups' => 'post:read']);
 
 
 
