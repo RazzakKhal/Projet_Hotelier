@@ -34,7 +34,7 @@ class ContactController extends AbstractController
 
             $email = (new Email())
                 ->from(new Address($mail, $nameos))
-                ->to("khalfallah.razzak@gmail.com")
+                ->to("hypnosrazzak@gmail.com")
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 ->replyTo($mail)

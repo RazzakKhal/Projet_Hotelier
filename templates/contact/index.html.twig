@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block contenu %}
-    {{ notif }}
+
     {{ form_start(formulaire) }}
 
     {{ form_widget(formulaire) }}
   <input type="submit" class="btn btn-dark">
     {{ form_end(formulaire) }}
+
+  {% if notif %}
+    <alert class="alert-success"> {{ notif }} </alert>
+  {% endif %}
 
 {% endblock %}
