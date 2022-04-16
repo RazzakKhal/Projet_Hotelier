@@ -1,68 +1,31 @@
 /////////////////////////////////////////////////////////////////////////////
 // TRAITEMENT DU FORMULAIRE RESERVATION GENERAL
 ////////////////////////////////////////////////////////////////////
-// Envoi du formulaire lorsque le champs etablisement est modifié
 
 
-
-
-let etablissement = document.getElementById('reservation_Etablissement');
 
 let form = document.getElementById('form_perso1');
-
-
-etablissement.addEventListener('change', envoi);
-etablissement.setAttribute('disabled', 'disabled');
-
-
-
-
-function envoi() {
-    if (document.getElementById('reservation_Room')) {
-
-        let room = document.getElementById('reservation_Room');
-        let label = document.getElementsByClassName('form-label');
-        room.remove();
-        alert('Veuillez re-sélectionner un etablissement ou appuyer sur Envoyer pour pouvoir séléctionner les suites');
-
-
-    } else {
-        form.submit();
-
-    }
-}
-
-
-// je bloque le remplissag d'etablissement tant que les dates ne sont pas selectionner pour être sur de pouvoir les récupérer sur un evenement change plus tard
-
-
-
-
-
-//si mon formulaire est soumis alors je debloque le champs pour que les informations soient retransmises
-
-form.addEventListener('submit', desactivedisabledsubmit);
-function desactivedisabledsubmit(){
-    etablissement.removeAttribute('disabled');
-}
-
-
-
+let bouton = document.getElementById('btn-general');
+bouton.setAttribute('disabled', 'disabled');
 
 //   si les champs de date de mon formulaire ne sont pas rempli alors je laisse etablissement disabled
 
-let startj = document.getElementById('reservation_Start_day');
-let startm = document.getElementById('reservation_Start_month');
-let starty = document.getElementById('reservation_Start_year');
-let endj = document.getElementById('reservation_End_day');
-let endm = document.getElementById('reservation_End_month');
-let endy = document.getElementById('reservation_End_year');
+let startj = document.getElementById('etab_room_resa_Start_day');
+let startm = document.getElementById('etab_room_resa_Start_month');
+let starty = document.getElementById('etab_room_resa_Start_year');
+let endj = document.getElementById('etab_room_resa_End_day');
+let endm = document.getElementById('etab_room_resa_End_month');
+let endy = document.getElementById('etab_room_resa_End_year');
+let etab = document.getElementById('etab_room_resa_Etablissement');
+let roomm = document.getElementById('etab_room_resa_Room');
 let valeurstartm= null;
 let valeurstarty = null;
 let valeurstartj = null;
 let valeurendm = null;
 let valeurendy = null;
 let valeurendj = null;
+let valeuretab = null;
+let valeurroom = null;
 
 
 
@@ -86,10 +49,17 @@ function deblocageetab(){
     valeurendm = endm.querySelector("option:checked");
     valeurendy = endy.querySelector("option:checked");
     valeurendj = endj.querySelector("option:checked");
+    valeuretab = etab.querySelector("option:checked").innerHTML;
+    valeurroom = roomm.querySelector("option:checked").innerHTML;
+
     //
     if(valeurstartj.innerHTML !== 'Jour' && valeurstartm.innerHTML  !== 'Mois' && valeurstarty.innerHTML  !== 'Année' && valeurendj.innerHTML  !== 'Jour' && valeurendm.innerHTML  !== 'Mois' && valeurendy.innerHTML  !== 'Année'){
+
+        etab.setAttribute('disabled', 'disabled');
+        roomm.setAttribute('disabled', 'disabled');
+
         // requetes mes dates en ajax
-        let url = '/reserv/resa/';
+        let url = '/reserv/resa' + '/' + valeuretab + '/' + valeurroom;
         let dates;
         axios.get(url).then(function (response) {
             dates = response.data;
@@ -102,31 +72,43 @@ function deblocageetab(){
             let maintenant = aujourdhui.getTime();
             let maintenants = maintenant / 1000;
             // Pour chaque valeur dans dates si elles sont comprise entre datedebut et datefin alors alert
-            if((datedebut < maintenants) || (datefin < datedebut)){
-                alert("Les dates selectionnées ne doivent pas être antérieur à aujourd'hui ou/et la date de sortie ne peut-être apres celle d'entrée");
-                etablissement.setAttribute('disabled', 'disabled');
-            }else {
-                dates.forEach(function (date) {
-                    // je récupère toutes les dates de mon fichier json, je les converti en timestamp, et compare avec les dates du client
-                    let dateentremili = Date.parse(date.Start);
-                    let datesortiemili = Date.parse(date.End);
-                    let dateentre = dateentremili / 1000;
-                    let datesortie = datesortiemili / 1000;
 
-                    if ((dateentre <= datedebut && datefin <= datesortie) || (dateentre <= datedebut && datedebut <= datesortie) || (dateentre <= datedebut && datefin <= datesortie) || (dateentre >= datedebut && datefin >= dateentre)) {
+            dates.forEach(function (date) {
+                // je récupère toutes les dates de mon fichier json, je les converti en timestamp, et compare avec les dates du client
+                let dateentremili = Date.parse(date.Start);
+                let datesortiemili = Date.parse(date.End);
+                let dateentre = dateentremili / 1000;
+                let datesortie = datesortiemili / 1000;
+
+                if((datedebut < maintenants) || (datefin < datedebut)){
+                    alert("Les dates selectionnées ne doivent pas être antérieur à aujourd'hui ou/et la date de sortie ne peut-être apres celle d'entrée");
+
+                }else {
+                    // bouton.removeAttribute('disabled');
+                } // fin else
+
+
+
+                if ((dateentre <= datedebut && datefin <= datesortie) || (dateentre <= datedebut && datedebut <= datesortie) || (dateentre <= datedebut && datefin <= datesortie) || (dateentre >= datedebut && datefin >= dateentre)) {
 //
-                        etablissement.setAttribute('disabled', 'disabled');
+                    //    etablissement.setAttribute('disabled', 'disabled');
 
-                        alert(" \n Période non disponible car réservée de : \n Entrée : " + date.Start + " \n Sortie : " + date.End);
+                    alert(" \n Période non disponible car réservée de : \n Entrée : " + date.Start + " \n Sortie : " + date.End);
+                    bouton.setAttribute('disabled', 'disabled');
+
+
+                } else {
+
+                    bouton.removeAttribute('disabled');
+                    etab.setAttribute('disabled', 'disabled');
+                    roomm.setAttribute('disabled', 'disabled');
+                }
+
+
+            }); // fin foreach
 
 
 
-                    } else {
-
-                    }
-
-                }); // fin foreach
-            } // fin else
 
 
         }); // fin axios
@@ -134,7 +116,7 @@ function deblocageetab(){
 
 
 
-        etablissement.removeAttribute('disabled');
+
 
     } // fin if
     else{
@@ -143,4 +125,9 @@ function deblocageetab(){
 
 }// fin fonction
 
-
+form.addEventListener('submit', recupinfo);
+// je réactive mes champs etablissement et room pour récupérer ls informations
+function recupinfo(){
+    etab.removeAttribute('disabled');
+    roomm.removeAttribute('disabled');
+}

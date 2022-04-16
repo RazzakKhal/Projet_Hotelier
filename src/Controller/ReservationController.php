@@ -25,7 +25,7 @@ class ReservationController extends AbstractController
 
         $resa = new Reservation();
 
-        $form = $this->createForm(ReservationType::class, $resa);
+        $form = $this->createForm(EtabRoomResaType::class, $resa);
         $form->handleRequest($request);
  $client = $this->getUser();
         if($form->isSubmitted() && $form->isValid()){
@@ -70,7 +70,7 @@ $etablissement = $etablissementRepository->findOneBy([
 $suite = $roomRepository->findOneBy([
     'Title' => $room
 ]);
-        $reservations = $reservationRepository->findAll();
+        $reservations = $reservationRepository->findByEtabRoom($etablissement, $suite);
        $dates = $normalizer->normalize($reservations, null, ['groups' => 'post:read']);
 
 

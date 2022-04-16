@@ -17,6 +17,16 @@ class EtabRoomResaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('Etablissement', EntityType::class, [
+                'class' => Etablissement::class
+
+
+            ])
+            ->add('Room', EntityType::class, [
+                'class' => Room::class
+
+
+            ])
 
             ->add('Start', DateType::class, [
                 'placeholder' => [
@@ -30,16 +40,7 @@ class EtabRoomResaType extends AbstractType
                 ],
                 'label' => 'Fin'
             ])
-            ->add('Etablissement', EntityType::class, [
-                'class' => Etablissement::class
 
-
-            ])
-            ->add('Room', EntityType::class, [
-                'class' => Room::class
-
-
-            ])
 
 
         ;

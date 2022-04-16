@@ -1,4 +1,6 @@
-
+#ligneheader2{
+    display : none;
+}
 
 .hauteurheader{
     height : 15%;
@@ -60,3 +62,18 @@ footer{
     min-height: 260px;
 }
 
+
+
+@media(min-width: 768px){
+
+    #ligne1header{
+        display : none;
+    }
+
+    #ligneheader2{
+        display:flex;
+    }
+
+
+
+}

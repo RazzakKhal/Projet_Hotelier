@@ -5,7 +5,7 @@
     {{ form_start(formulaire, {'attr': {'id': 'form_perso1'}}) }}
     {{ form_widget(formulaire) }}
     {% if app.user %}
-        <input type="submit" class="btn btn-dark" >
+        <input id="btn-general" type="submit" class="btn btn-dark" >
     {% else %}
         <alert class="alert-info">Vous devez être connecté pour pouvoir réserver</alert><br><br>
         <a href="{{ path('app_login') }}" class="btn btn-info">Se connecter</a>
