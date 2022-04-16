@@ -2,6 +2,10 @@
 
 {% block contenu %}
 
-    {{ form(formulaire) }}
+    {{ form_start(formulaire) }}
+
+    {{ form_widget(formulaire) }}
+  <input type="submit" class="btn btn-dark">
+    {{ form_end(formulaire) }}
 
 {% endblock %}
