@@ -64,7 +64,7 @@ function deblocageetab(){
         let dates;
         axios.get(url).then(function (response) {
             //pb entre ici
-            alert('test');
+
             dates = response.data;
             // je récupère ma valeur date début et date fin entré ( parse les met en timestamp milliseconde et je les converti en seconde pour comparer par la suite)
             let datedebutmili = Date.parse(valeurstartm.innerHTML + ' '+ valeurstartj.innerHTML + ','+ valeurstarty.innerHTML);
@@ -76,7 +76,12 @@ function deblocageetab(){
             let maintenants = maintenant / 1000;
             // Pour chaque valeur dans dates si elles sont comprise entre datedebut et datefin alors alert
            // pb entre la
-                dates.forEach(function (date) {
+            if((datedebut < maintenants) || (datefin < datedebut)){
+                alert("Les dates selectionnées ne doivent pas être antérieur à aujourd'hui ou/et la date de sortie ne peut-être apres celle d'entrée");
+
+            }
+
+            dates.forEach(function (date) {
 
                     // je récupère toutes les dates de mon fichier json, je les converti en timestamp, et compare avec les dates du client
                     let dateentremili = Date.parse(date.Start);
@@ -84,12 +89,6 @@ function deblocageetab(){
                     let dateentre = dateentremili / 1000;
                     let datesortie = datesortiemili / 1000;
 
-                    if((datedebut < maintenants) || (datefin < datedebut)){
-                        alert("Les dates selectionnées ne doivent pas être antérieur à aujourd'hui ou/et la date de sortie ne peut-être apres celle d'entrée");
-
-                    }else {
-                       // bouton.removeAttribute('disabled');
-                    } // fin else
 
 
 
