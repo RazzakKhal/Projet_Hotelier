@@ -74,6 +74,7 @@ function deblocageetab(){
             // Pour chaque valeur dans dates si elles sont comprise entre datedebut et datefin alors alert
 
                 dates.forEach(function (date) {
+                    console.log(date);
                     // je récupère toutes les dates de mon fichier json, je les converti en timestamp, et compare avec les dates du client
                     let dateentremili = Date.parse(date.Start);
                     let datesortiemili = Date.parse(date.End);
