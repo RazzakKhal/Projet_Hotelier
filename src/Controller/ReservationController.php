@@ -64,11 +64,13 @@ class ReservationController extends AbstractController
 
     #[Route('/reserv/resa/{etab}/{room}', name: 'app_resa')]
     public function resa($etab, $room, ReservationRepository $reservationRepository, NormalizerInterface $normalizer, EtablissementRepository $etablissementRepository, RoomRepository $roomRepository ){
+        $etabi = str_replace('-', ' ', $etab);
 $etablissement = $etablissementRepository->findOneBy([
-    'Name' => $etab
+    'Name' => $etabi
 ]);
+$roomi = str_replace('-', ' ', $room);
 $suite = $roomRepository->findOneBy([
-    'Title' => $room
+    'Title' => $roomi
 ]);
         $reservations = $reservationRepository->findByEtabRoom($etablissement, $suite);
        $dates = $normalizer->normalize($reservations, null, ['groups' => 'post:read']);
@@ -83,11 +85,11 @@ $suite = $roomRepository->findOneBy([
 
 #[Route('/reservation/{etab}/{room}', name: 'app_resapersonnalise')]
 public function resaPerso($etab, $room, Request $request, EtablissementRepository $etablissementRepository, RoomRepository $roomRepository, EntityManagerInterface $entityManager){
-
-
+    $etabi = str_replace('-', ' ', $etab);
+    $roomi = str_replace('-', ' ', $room);
         $resa = new Reservation();
-        $etablissement = $etablissementRepository->find($etab);
-        $suite = $roomRepository->find($room);
+        $etablissement = $etablissementRepository->find($etabi);
+        $suite = $roomRepository->find($roomi);
         $resa->setEtablissement($etablissement);
         $resa->setRoom($suite);
 

@@ -49,8 +49,8 @@ function deblocageetab(){
     valeurendm = endm.querySelector("option:checked");
     valeurendy = endy.querySelector("option:checked");
     valeurendj = endj.querySelector("option:checked");
-    valeuretab = etab.querySelector("option:checked").innerHTML;
-    valeurroom = roomm.querySelector("option:checked").innerHTML;
+    valeuretab = etab.querySelector("option:checked").innerHTML.replace(/ /g, "-");
+    valeurroom = roomm.querySelector("option:checked").innerHTML.replace(/ /g, "-");
 
     //
     if(valeurstartj.innerHTML !== 'Jour' && valeurstartm.innerHTML  !== 'Mois' && valeurstarty.innerHTML  !== 'Année' && valeurendj.innerHTML  !== 'Jour' && valeurendm.innerHTML  !== 'Mois' && valeurendy.innerHTML  !== 'Année'){

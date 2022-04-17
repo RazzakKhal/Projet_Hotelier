@@ -42,6 +42,7 @@ endy.addEventListener('change', deblocageetab);
 
 // fonction qui permet de debloquer mon champ etablissement si toutes les dates sont remplies
 function deblocageetab(){
+
     //je récupère le nouveau contenu text des options selectionnées
     valeurstartm = startm.querySelector("option:checked");
     valeurstarty = starty.querySelector("option:checked");
@@ -49,8 +50,8 @@ function deblocageetab(){
     valeurendm = endm.querySelector("option:checked");
     valeurendy = endy.querySelector("option:checked");
     valeurendj = endj.querySelector("option:checked");
-    valeuretab = etab.querySelector("option:checked").innerHTML;
-    valeurroom = roomm.querySelector("option:checked").innerHTML;
+    valeuretab = etab.querySelector("option:checked").innerHTML.replace(/ /g, "-");
+    valeurroom = roomm.querySelector("option:checked").innerHTML.replace(/ /g, "-");
 
     //
     if(valeurstartj.innerHTML !== 'Jour' && valeurstartm.innerHTML  !== 'Mois' && valeurstarty.innerHTML  !== 'Année' && valeurendj.innerHTML  !== 'Jour' && valeurendm.innerHTML  !== 'Mois' && valeurendy.innerHTML  !== 'Année'){
@@ -62,6 +63,7 @@ function deblocageetab(){
         let url = '/reserv/resa' + '/' + valeuretab + '/' + valeurroom;
         let dates;
         axios.get(url).then(function (response) {
+            //pb entre ici
             alert('test');
             dates = response.data;
             // je récupère ma valeur date début et date fin entré ( parse les met en timestamp milliseconde et je les converti en seconde pour comparer par la suite)
@@ -73,7 +75,7 @@ function deblocageetab(){
             let maintenant = aujourdhui.getTime();
             let maintenants = maintenant / 1000;
             // Pour chaque valeur dans dates si elles sont comprise entre datedebut et datefin alors alert
-
+           // pb entre la
                 dates.forEach(function (date) {
 
                     // je récupère toutes les dates de mon fichier json, je les converti en timestamp, et compare avec les dates du client
