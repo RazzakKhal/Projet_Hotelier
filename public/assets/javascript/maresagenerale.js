@@ -62,7 +62,7 @@ function deblocageetab(){
         let url = '/reserv/resa' + '/' + valeuretab + '/' + valeurroom;
         let dates;
         axios.get(url).then(function (response) {
-            alert('test');
+
             dates = response.data;
             // je récupère ma valeur date début et date fin entré ( parse les met en timestamp milliseconde et je les converti en seconde pour comparer par la suite)
             let datedebutmili = Date.parse(valeurstartm.innerHTML + ' '+ valeurstartj.innerHTML + ','+ valeurstarty.innerHTML);

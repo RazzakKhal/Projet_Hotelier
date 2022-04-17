@@ -27,7 +27,7 @@ class ReservationController extends AbstractController
 
         $form = $this->createForm(EtabRoomResaType::class, $resa);
         $form->handleRequest($request);
- $client = $this->getUser();
+        $client = $this->getUser();
         if($form->isSubmitted() && $form->isValid()){
             // je vais vérifier que la date du début de séjour soit bien supérieur à ajd
             $resa = $form->getData();
