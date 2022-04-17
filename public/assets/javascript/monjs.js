@@ -2,8 +2,6 @@
 
 let iconemenu = document.getElementById('menuburger');
 let menucache = document.getElementById('menucache');
-let navcache = document.getElementById('navcache');
-let bodydy = document.getElementById('bodydy');
 let iconecroix = document.getElementById('fermeturemenu');
 
 
@@ -20,7 +18,7 @@ function apparait(){
    menucache.style.opacity = '0.75';
     menucache.style.right ='0px';
 
-  //  menucache.style.zIndex = '2';
+
 
 
 }
