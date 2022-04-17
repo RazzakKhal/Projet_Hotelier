@@ -61,11 +61,16 @@ function deblocageetab(){
 
         // requetes mes dates en ajax
         let url = '/reserv/resa' + '/' + valeuretab + '/' + valeurroom;
-        let dates;
+        let dates = null;
         axios.get(url).then(function (response) {
             //pb entre ici
 
             dates = response.data;
+
+            if(dates.length === 0){
+                bouton.removeAttribute('disabled');
+            }
+
             // je récupère ma valeur date début et date fin entré ( parse les met en timestamp milliseconde et je les converti en seconde pour comparer par la suite)
             let datedebutmili = Date.parse(valeurstartm.innerHTML + ' '+ valeurstartj.innerHTML + ','+ valeurstarty.innerHTML);
             let datedebut = datedebutmili / 1000;
@@ -78,6 +83,9 @@ function deblocageetab(){
            // pb entre la
             if((datedebut < maintenants) || (datefin < datedebut)){
                 alert("Les dates selectionnées ne doivent pas être antérieur à aujourd'hui ou/et la date de sortie ne peut-être apres celle d'entrée");
+                if(dates.length === 0){
+                    bouton.setAttribute('disabled', 'disabled');
+                }
 
             }
 
