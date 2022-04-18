@@ -1,0 +1,82 @@
+J'ai crée mes tables via la migration de mes entités. Suite à des changements manuel dans les entités et desbugs qui ont suivis j'ai du supprimé les migrations pour en refaire une propre.
+J'ai inséré les valeurs des managers, admin, utilisateurs, etablissements, et rooms, et la répartitions des room dans les etablissements de la manière suivante:
+
+
+
+
+INSERT INTO etablissement (name, city, adress, description) VALUES
+('HYPNOS PARIS', 'Paris', '1 rue de paris', 'Votre établissement hypnos paris vous accueille dans la capital et vous convie dans ses magnifiques suites romantiques et insolites pour des plaisirs gustatifs, olfactifs, et sensoriels'),
+('HYPNOS MARSEILLE', 'Marseille', '1 rue de Marseille', 'Votre établissement hypnos marseille vous accueille dans la cté fosséenne et vous convie dans ses magnifiques suites romantiques et insolites pour des plaisirs gustatifs'),
+('HYPNOS TOULOUSE', 'Toulouse', '1 rue de Toulouse', 'Votre établissement hypnos toulouse vous accueille dans superbe ville et vous convie dans ses magnifiques suites romantiques et insolites pour des plaisirs gustatifs, olfactifs, et sensoriels'),
+('HYPNOS NIMES', 'Nimes', '1 rue de Nimes', 'Votre établissement hypnos nimes vous accueille dans superbe ville et vous convie dans ses magnifiques suites romantiques et insolites pour des plaisirs gustatifs, olfactifs, et sensoriels'),
+('HYPNOS LYON', 'Lyon', '1 rue de Lyon', 'Votre établissement hypnos lyon vous accueille dans superbe ville et vous convie dans ses magnifiques suites romantiques et insolites pour des plaisirs gustatifs'),
+('HYPNOS BORDEAUX', 'Bordeaux', '1 rue de Bordeaux', 'Votre établissement hypnos bordeaux vous accueille dans superbe ville et vous convie dans ses magnifiques suites romantiques et insolites pour des plaisirs gustatifs'),
+('HYPNOS REIMS', 'Reims', '1 rue de Reims', 'Votre établissement hypnos reims vous accueille dans superbe ville et vous convie dans ses magnifiques suites romantiques et insolites pour des plaisirs gustatifs, olfactifs, et sensoriels');
+
+
+INSERT INTO room (title, image, description, price, library, booking_link) VALUES
+('Suite Standard', 'suite1.jpg', 'Une superbe suite standard pour un moment de tranquilité à deux', 119.99, 'a:2:{i:0;s:10:\"suite1.jpg\";i:1;s:9:\"bain1.jpg\";}', 'www.lienbooking.com'),
+('Suite Coquine', 'suite2.jpg', 'Une superbe suite coquine pour un moment coquin à 2, des accessoires surprises et boissons seront à disposition dans la chambre', 159.99, 'a:2:{i:0;s:10:\"suite2.jpg\";i:1;s:9:\"bain2.jpg\";}', 'www.lienbooking.com'),
+('Suite Standard plus', 'suite3.jpg', 'Une superbe suite standard plus vous propose boissons et accès à l\'espace détente de notre hotel', 169.99, 'a:2:{i:0;s:10:\"suite3.jpg\";i:1;s:9:\"bain3.jpg\";}', 'www.lienbooking.com'),
+('Suite Atypique', 'suite4.jpg', 'Une superbe suite atypique pour vous faire voyager, vous pourrez y trouver des boissons et commander des plats qui vous feront voyager à travers le globe ', 179.99, 'a:2:{i:0;s:10:\"suite4.jpg\";i:1;s:9:\"bain4.jpg\";}', 'www.lienbooking.com'),
+('Suite Haut de gamme', 'suite5.jpg', 'Une superbe suite haut de gamme qui pour permettra de commander des boissons et plats locaux à volonté', 259.99, 'a:2:{i:0;s:10:\"suite5.jpg\";i:1;s:9:\"bain5.jpg\";}', 'www.lienbooking.com'),
+('Suite Haut de gamme plus', 'suite6.jpg', 'Une superbesuite haut de gamme plus vous permet de commander des boissons et à manger à volonté ainsi que d\'accéder à notre espace détente', 329.99, 'a:2:{i:0;s:10:\"suite6.jpg\";i:1;s:9:\"bain6.jpg\";}', 'www.lienbooking.com');
+
+
+
+INSERT INTO etablissement_room (etablissement_id, room_id) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(2, 1),
+(2, 3),
+(2, 5),
+(2, 6),
+(3, 1),
+(3, 2),
+(3, 4),
+(3, 6),
+(4, 1),
+(4, 2),
+(4, 3),
+(4, 4),
+(5, 1),
+(5, 2),
+(5, 3),
+(5, 4),
+(5, 5),
+(6, 1),
+(6, 4),
+(6, 5),
+(6, 6),
+(7, 1),
+(7, 2),
+(7, 5),
+(7, 6);
+
+
+INSERT INTO user (email, roles, password, name, firstname, etablissement_id) VALUES
+('hypnosrazzak@gmail.com', '["ROLE_ADMIN"]', 'admin', '', '', NULL),
+('gerant1@hotmail.fr', '["ROLE_GERANT"]', 'geranta', 'geranta', 'geranta', 1),
+('gerant2@hotmail.fr', '["ROLE_GERANT"]', 'gerantb', 'gerantb', 'gerantb', 2),
+('gerant3@hotmail.fr', '["ROLE_GERANT"]', 'gerantc', 'gerantc', 'gerantc', 3),
+('gerant4@hotmail.fr', '["ROLE_GERANT"]', 'gerantd', 'gerantd', 'gerantd', 4),
+('gerant5@hotmail.fr', '["ROLE_GERANT"]', 'gerante', 'gerante', 'gerante', 5),
+('gerant6@hotmail.fr', '["ROLE_GERANT"]', 'gerantf', 'gerantf', 'gerantf', 6),
+('gerant7@hotmail.fr', '["ROLE_GERANT"]', 'gerantg', 'gerantg', 'gerantg', 7);
+
+
+Le mot de passe crypté à été ajouté par la suite
+
+
+
+
+
+
+
+
+
+
