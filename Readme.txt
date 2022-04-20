@@ -1,12 +1,12 @@
 Déploiement de l'application web sur heroku de la manière suivante:
 
 Créer un depot git dans le projet 
-Aller sur le site d'heroku, me suis connecté et j'ai cliqué New, create new app
+Aller sur le site d'heroku, se connecter et cliquer New, create new app
 Entrer le nom de mon application
 Aller dans Setting, Reveal Config Vars, ajouter la variable d'environnement APP_ENV=prod
 Aller dans Ressources, dans adds-on ajouter clearDB pour gérer la base de données 
 Retourner dans setting, Reveal Confif Vars, ajouter la variable d'environnement DATABASE_URL=valeurclear-db_database
-Creer un fichier Procfile à la source de mon projet sur phpstorm, mettre : web: heroku-php-apache2 public/
+Creer un fichier Procfile à la source du projet sur phpstorm, mettre : web: heroku-php-apache2 public/
 Faire git add -A, git commit, git push heroku main
 Faire heroku run php bin/console doctrine:migrations:migrate
 
